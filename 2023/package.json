@@ -1,4 +1,19 @@
 {
+	"license": "MIT",
 	"name": "2023",
-	"scripts": {}
+	"version": "0.0.0",
+	"scripts": {
+		"day-1": "ts-node ./day-1",
+		"test": "vitest run"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.202",
+		"@types/node": "^20.10.4",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.3.3",
+		"vitest": "^1.0.2"
+	},
+	"dependencies": {
+		"lodash": "^4.17.21"
+	}
 }
