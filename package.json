@@ -1,10 +1,22 @@
 {
-	"license": "MIT",
-	"name": "advent-of-code",
-	"packageManager": "yarn@1.22.21",
-	"private": true,
-	"version": "0.0.0",
-	"workspaces": [
-		"2023"
-	]
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.0"
+  },
+  "license": "MIT",
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "name": "advent-of-code",
+  "packageManager": "yarn@1.22.21",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "prettier": "prettier --write ."
+  },
+  "version": "0.0.0",
+  "workspaces": [
+    "2023"
+  ]
 }
