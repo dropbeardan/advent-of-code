@@ -13,6 +13,18 @@ const NUMBER_MAPPINGS = {
 	'9': 9,
 };
 
+const WORD_TO_NUMBER_MAPPINGS = {
+	one: 1,
+	two: 2,
+	three: 3,
+	four: 4,
+	five: 5,
+	six: 6,
+	seven: 7,
+	eight: 8,
+	nine: 9,
+};
+
 export const getCalibrationValue = (line: string) => {
 	const numberInstances = getInstancesOfNumbers(line);
 
@@ -38,10 +50,17 @@ export const getCalibrationValue = (line: string) => {
 };
 
 export const getInstancesOfNumbers = (line: string) =>
-	Object.entries(NUMBER_MAPPINGS)
+	[
+		...Object.entries(NUMBER_MAPPINGS),
+		...Object.entries(WORD_TO_NUMBER_MAPPINGS),
+	]
 		.map(([stringRepresentation, numberRepresentation]) => {
-			const firstIndex = line.indexOf(stringRepresentation);
-			const lastIndex = line.lastIndexOf(stringRepresentation);
+			const firstIndex = line
+				.toLowerCase()
+				.indexOf(stringRepresentation.toLowerCase());
+			const lastIndex = line
+				.toLowerCase()
+				.lastIndexOf(stringRepresentation.toLowerCase());
 
 			return {
 				firstIndex,

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { getCalibrationValue, getInstancesOfNumbers } from './helpers';
 
 describe('getCalibrationValue', () => {
-	it('returns the number represenatation of the first and last numbers in the line joined together', () => {
+	it('returns the number representation of the first and last numbers in the line joined together', () => {
 		expect(getCalibrationValue('1abc2')).toEqual(12);
 		expect(getCalibrationValue('pqr3stu8vwx')).toEqual(38);
 		expect(getCalibrationValue('a1b2c3d4e5f')).toEqual(15);
@@ -12,6 +12,18 @@ describe('getCalibrationValue', () => {
 	describe('when only a single number is present in the line', () => {
 		it('returns the number representation of the first number joined together with itself', () => {
 			expect(getCalibrationValue('treb7uchet')).toEqual(77);
+		});
+	});
+
+	describe('when the numbers (1-9) are represented as words', () => {
+		it('returns the number representation of the first and last numbers in the line joined together', () => {
+			expect(getCalibrationValue('two1nine')).toEqual(29);
+			expect(getCalibrationValue('eightwothree')).toEqual(83);
+			expect(getCalibrationValue('abcone2threexyz')).toEqual(13);
+			expect(getCalibrationValue('xtwone3four')).toEqual(24);
+			expect(getCalibrationValue('4nineeightseven2')).toEqual(42);
+			expect(getCalibrationValue('zoneight234')).toEqual(14);
+			expect(getCalibrationValue('7pqrstsixteen')).toEqual(76);
 		});
 	});
 
@@ -97,6 +109,91 @@ describe('getInstancesOfNumbers', () => {
 		});
 	});
 
+	describe('when the numbers (1-9) are expressed as words', () => {
+		it('returns the instance details corresponding to the number representation of those words', () => {
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 0,
+				lastIndex: 0,
+				numberRepresentation: 1,
+				stringRepresentation: 'one',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 3,
+				lastIndex: 3,
+				numberRepresentation: 2,
+				stringRepresentation: 'two',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 6,
+				lastIndex: 6,
+				numberRepresentation: 3,
+				stringRepresentation: 'three',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 11,
+				lastIndex: 11,
+				numberRepresentation: 4,
+				stringRepresentation: 'four',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 15,
+				lastIndex: 15,
+				numberRepresentation: 5,
+				stringRepresentation: 'five',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 19,
+				lastIndex: 19,
+				numberRepresentation: 6,
+				stringRepresentation: 'six',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 22,
+				lastIndex: 22,
+				numberRepresentation: 7,
+				stringRepresentation: 'seven',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 27,
+				lastIndex: 27,
+				numberRepresentation: 8,
+				stringRepresentation: 'eight',
+			});
+
+			expect(
+				getInstancesOfNumbers('oneTwoTHREEfourFiveSIXsevenEightNINE')
+			).toContainEqual({
+				firstIndex: 32,
+				lastIndex: 32,
+				numberRepresentation: 9,
+				stringRepresentation: 'nine',
+			});
+		});
+	});
+
 	describe('when there are multiple instances of the same number', () => {
 		it('sets the firstIndex and lastIndex to the indexes of the first and last instances of the number', () => {
 			expect(getInstancesOfNumbers('0x0x0')).toContainEqual({
@@ -104,6 +201,13 @@ describe('getInstancesOfNumbers', () => {
 				lastIndex: 4,
 				numberRepresentation: 0,
 				stringRepresentation: '0',
+			});
+
+			expect(getInstancesOfNumbers('onexOnexONE')).toContainEqual({
+				firstIndex: 0,
+				lastIndex: 8,
+				numberRepresentation: 1,
+				stringRepresentation: 'one',
 			});
 		});
 	});
