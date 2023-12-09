@@ -24,6 +24,12 @@ const main = async () => {
 	);
 
 	console.log({ sumOfQualifyingGameIds });
+
+	const totalRequiredGamePowers = sum(
+		gameDetails.map((game) => game.requiredPower)
+	);
+
+	console.log({ totalRequiredGamePowers });
 };
 
 main();

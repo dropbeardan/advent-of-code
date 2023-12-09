@@ -20,9 +20,12 @@ export const getGameDetails = (line: string) => {
 		flatten(revelationResults)
 	);
 
+	const requiredPower = getRequiredPowerFromRGB(maxRevelationsByColor);
+
 	return {
 		gameId,
 		maxRevelationsByColor,
+		requiredPower,
 		revelations: revelationResults,
 	};
 };
@@ -56,3 +59,21 @@ export const getRevelationResults = (revelation: string) =>
 			count: Number(colorMatches.groups!.count),
 		};
 	});
+
+export const getRequiredPowerFromRGB = (
+	maxRevelationCounts: Record<string, number>
+) => {
+	if (
+		!maxRevelationCounts.blue &&
+		!maxRevelationCounts.green &&
+		!maxRevelationCounts.red
+	) {
+		return 0;
+	}
+
+	const requiredBluePower = maxRevelationCounts.blue || 1;
+	const requiredGreenPower = maxRevelationCounts.green || 1;
+	const requiredRedPower = maxRevelationCounts.red || 1;
+
+	return requiredBluePower * requiredGreenPower * requiredRedPower;
+};

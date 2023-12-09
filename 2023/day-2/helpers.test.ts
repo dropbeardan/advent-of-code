@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
 	getGameDetails,
 	getMaxRevelationCountsByColor,
+	getRequiredPowerFromRGB,
 	getRevelationResults,
 } from './helpers';
 
@@ -17,6 +18,7 @@ describe('getGameDetails', () => {
 				green: 2,
 				red: 4,
 			},
+			requiredPower: 48,
 			revelations: [
 				[
 					{ color: 'blue', count: 3 },
@@ -42,6 +44,7 @@ describe('getGameDetails', () => {
 				green: 3,
 				red: 1,
 			},
+			requiredPower: 12,
 			revelations: [
 				[
 					{ color: 'blue', count: 1 },
@@ -70,6 +73,7 @@ describe('getGameDetails', () => {
 				green: 13,
 				red: 20,
 			},
+			requiredPower: 1560,
 			revelations: [
 				[
 					{ color: 'green', count: 8 },
@@ -99,6 +103,7 @@ describe('getGameDetails', () => {
 				green: 3,
 				red: 14,
 			},
+			requiredPower: 630,
 			revelations: [
 				[
 					{ color: 'green', count: 1 },
@@ -126,6 +131,7 @@ describe('getGameDetails', () => {
 				green: 3,
 				red: 6,
 			},
+			requiredPower: 36,
 			revelations: [
 				[
 					{ color: 'red', count: 6 },
@@ -144,6 +150,45 @@ describe('getGameDetails', () => {
 	describe('when the line is not a valid game detail', () => {
 		it('throws an error indicating that the line is invalid', () => {
 			expect(() => getGameDetails('abc')).toThrow('Invalid line.');
+		});
+	});
+});
+
+describe('getRequiredPowerFromRGB', () => {
+	it('returns the multiplication of the maximum blue, green and red revelation results', () => {
+		expect(getRequiredPowerFromRGB({ blue: 2, green: 3, red: 4 })).toEqual(24);
+	});
+
+	describe('when additional colors are specified', () => {
+		it('ignores the additional colors', () => {
+			expect(
+				getRequiredPowerFromRGB({
+					black: 100,
+					blue: 2,
+					green: 3,
+					red: 4,
+					white: 200,
+				})
+			).toEqual(24);
+		});
+	});
+
+	describe('when either the blue, green or red colors were not revealed', () => {
+		it('returns the multiplication of the remaining revelation results', () => {
+			expect(getRequiredPowerFromRGB({ blue: 0, green: 3, red: 4 })).toEqual(
+				12
+			);
+			expect(getRequiredPowerFromRGB({ blue: 2, green: 0, red: 4 })).toEqual(8);
+			expect(getRequiredPowerFromRGB({ blue: 2, green: 3, red: 0 })).toEqual(6);
+			expect(getRequiredPowerFromRGB({ blue: 2, green: 0, red: 0 })).toEqual(2);
+			expect(getRequiredPowerFromRGB({ blue: 0, green: 3, red: 0 })).toEqual(3);
+			expect(getRequiredPowerFromRGB({ blue: 0, green: 0, red: 4 })).toEqual(4);
+		});
+	});
+
+	describe('when no blue, green or red colors were revealed', () => {
+		it('returns zero', () => {
+			expect(getRequiredPowerFromRGB({ blue: 0, green: 0, red: 0 })).toEqual(0);
 		});
 	});
 });
